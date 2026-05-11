@@ -1,9 +1,10 @@
 import datetime
 import sqlalchemy
+from flask_login import UserMixin
 from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
 
-class Note(SqlAlchemyBase):
+class Note(SqlAlchemyBase, UserMixin):
     __tablename__ = "notes"
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     title = sqlalchemy.Column(sqlalchemy.String)

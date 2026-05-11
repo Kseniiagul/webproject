@@ -1,9 +1,10 @@
 import sqlalchemy
+from flask_login import UserMixin
 from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
 
 
-class Attachment(SqlAlchemyBase):
+class Attachment(SqlAlchemyBase, UserMixin):
     __tablename__ = "attachments"
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     filename = sqlalchemy.Column(sqlalchemy.String)
