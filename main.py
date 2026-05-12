@@ -1,15 +1,48 @@
 from datetime import datetime
-from forms.user import RegisterForm
+from forms.user import RegisterForm, LoginForm
 from database.users import User
 from database import db_session
 from flask import render_template, redirect, Flask
+
+from flask_login import LoginManager, login_user, login_required, logout_user
 
 from routes.export import export_note
 from routes.view import view_note
 from routes.api import api_note
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'ваш-секретный-ключ-здесь'
+app.config['SECRET_KEY'] = 'our-secret-key-here'
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.get(User, user_id)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(User.username == form.username.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            return redirect("/")
+        return render_template('login.html',
+                               message="Неправильный логин или пароль",
+                               form=form)
+    return render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
 
 
 @app.route('/register', methods=['GET', 'POST'])

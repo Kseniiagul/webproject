@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6f1ef96-2533-479d-a473-87d329174ecf" name="Changes" comment="Создание базы данных">
-      <change afterPath="$PROJECT_DIR$/forms/user.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
+    <list default="true" id="b6f1ef96-2533-479d-a473-87d329174ecf" name="Changes" comment="Форма регистрации пользователя">
+      <change afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/attachments.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/attachments.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/notes.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/notes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/notes.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/notes.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forms/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778437820510</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Форма регистрации пользователя">
+      <option name="closed" value="true" />
+      <created>1778539340168</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1778539340168</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -184,6 +189,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Создание базы данных" />
-    <option name="LAST_COMMIT_MESSAGE" value="Создание базы данных" />
+    <MESSAGE value="Форма регистрации пользователя" />
+    <option name="LAST_COMMIT_MESSAGE" value="Форма регистрации пользователя" />
   </component>
 </project>
