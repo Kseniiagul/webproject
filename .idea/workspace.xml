@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6f1ef96-2533-479d-a473-87d329174ecf" name="Changes" comment="Форма авторизации пользователя">
-      <change afterPath="$PROJECT_DIR$/routes/auth.py" afterDir="false" />
+    <list default="true" id="b6f1ef96-2533-479d-a473-87d329174ecf" name="Changes" comment="перенос маршрутов для авторизации в отдельный файл (освобождение main)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/notes.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/notes.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +179,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778603725343</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="перенос маршрутов для авторизации в отдельный файл (освобождение main)">
+      <option name="closed" value="true" />
+      <created>1778605648110</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778605648110</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -196,6 +205,7 @@
     <MESSAGE value="Создание базы данных" />
     <MESSAGE value="Форма регистрации пользователя" />
     <MESSAGE value="Форма авторизации пользователя" />
-    <option name="LAST_COMMIT_MESSAGE" value="Форма авторизации пользователя" />
+    <MESSAGE value="перенос маршрутов для авторизации в отдельный файл (освобождение main)" />
+    <option name="LAST_COMMIT_MESSAGE" value="перенос маршрутов для авторизации в отдельный файл (освобождение main)" />
   </component>
 </project>
