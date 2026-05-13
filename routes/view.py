@@ -1,70 +1,26 @@
-import io
-from utils.md_parser import to_html, to_txt
-from flask import Blueprint, send_file, abort, session
-from database.db_session import create_session
+from flask import Blueprint, render_template, abort, session
 from database.notes import Note
+from database.attachments import Attachment
+from database.db_session import create_session
+from utils.md_parser import to_html
 
-blueprint = Blueprint('export_note', __name__, template_folder='templates')
+blueprint = Blueprint('view_note', __name__, template_folder='templates')
 
-def check_user(note_id):
+@blueprint.route('/note/<int:note_id>', methods=['GET'])
+def view_note(note_id):
     if 'user_id' not in session:
-        return None, None
+        abort(401)
+
     db_sess = create_session()
     note = db_sess.query(Note).get(note_id)
-
     if not note or note.user_id != session['user_id']:
         db_sess.close()
-        return None, None
+        abort(404)
 
-    return note, db_sess
+    rendered_html = to_html(note.content)
 
-@blueprint.route('/note/<int:note_id>/export/md', methods=['GET'])
-def export_note_md(note_id):
-    note, db_sess = check_user(note_id)
-    if not note:
-        abort(403)
-
-    content = note.content.encode('utf-8')
+    attachments = db_sess.query(Attachment).filter(Attachment.note_id == note_id).all()
 
     db_sess.close()
-    return send_file(io.BytesIO(content), mimetype='text/plain', download_name=note.title + '.md', as_attachment=True)
 
-@blueprint.route('/note/<int:note_id>/export/html', methods=['GET'])
-def export_note_html(note_id):
-    note, db_sess = check_user(note_id)
-    if not note:
-        abort(403)
-
-    body_html = to_html(note.content)
-
-    html = """<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>""" + note.title + """</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-<body>
-    <h1>""" + note.title + """</h1>
-    """ + body_html + """
-</body>
-</html>"""
-
-    db_sess.close()
-    return send_file(io.BytesIO(html.encode('utf-8')), mimetype='text/html', download_name=note.title + '.html', as_attachment=True)
-
-@blueprint.route('/note/<int:note_id>/export/txt', methods=['GET'])
-def export_note_txt(note_id):
-    note, db_sess = check_user(note_id)
-    if not note:
-        abort(403)
-
-    txt = to_txt(note.content)
-
-    db_sess.close()
-    return send_file(io.BytesIO(txt.encode('utf-8')), mimetype='text/plain', download_name=note.title + '.txt', as_attachment=True)
-
-
-
-
-
+    return render_template('note_view.html', note=note, rendered_html=rendered_html, attachments=attachments)
