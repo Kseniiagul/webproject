@@ -25,7 +25,7 @@ def authorization_routes(app):
             user = db_sess.query(User).filter(User.username == form.username.data).first()
             if user and user.check_password(form.password.data):
                 login_user(user, remember=form.remember_me.data)
-                return redirect("/")
+                return redirect("/notes")
             return render_template('login.html',
                                    message="Неправильный логин или пароль",
                                    form=form)

@@ -12,4 +12,4 @@ class Attachment(SqlAlchemyBase, UserMixin):
     file_type = sqlalchemy.Column(sqlalchemy.String)
 
     note_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("notes.id"))
-    note = orm.relationship('Note')
+    note = orm.relationship('Note', back_populates='attachments')

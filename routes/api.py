@@ -4,9 +4,9 @@ from database.notes import Note
 from database.attachments import Attachment
 from database.db_session import create_session
 
-blueprint = Blueprint('api_note', __name__, template_folder='templates')
+api_bp = Blueprint('api_note', __name__, template_folder='templates')
 
-@blueprint.route('/api/notes', methods=['GET'])
+@api_bp.route('/api/notes', methods=['GET'])
 def api_notes():
     if 'user_id' not in session:
         abort(401)
@@ -26,7 +26,7 @@ def api_notes():
 
     return jsonify(results)
 
-@blueprint.route('/api/note/<int:id>', methods=['GET'])
+@api_bp.route('/api/note/<int:id>', methods=['GET'])
 def api_note(note_id):
     if 'user_id' not in session:
         abort(401)
@@ -62,7 +62,7 @@ def api_note(note_id):
 
     return jsonify(result)
 
-@blueprint.route('/api/note', methods=['POST'])
+@api_bp.route('/api/note', methods=['POST'])
 def api_note_post():
     if 'user_id' not in session:
         abort(401)
@@ -87,7 +87,7 @@ def api_note_post():
 
     return jsonify({'id': note_id, 'message': 'created'}), 201
 
-@blueprint.route('/api/note/<int:id>', methods=['PUT'])
+@api_bp.route('/api/note/<int:id>', methods=['PUT'])
 def api_note_update(note_id):
     if 'user_id' not in session:
         abort(401)
@@ -115,7 +115,7 @@ def api_note_update(note_id):
 
     return jsonify({'id': note_id, 'message': 'updated'})
 
-@blueprint.route('/api/note/<int:id>', methods=['DELETE'])
+@api_bp.route('/api/note/<int:id>', methods=['DELETE'])
 def api_note_delete(note_id):
     if 'user_id' not in session:
         abort(401)
