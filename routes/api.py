@@ -4,7 +4,7 @@ from database.notes import Note
 from database.attachments import Attachment
 from database.db_session import create_session
 
-blueprint = Blueprint('api_note', __name__, templates_folder='templates')
+blueprint = Blueprint('api_note', __name__, template_folder='templates')
 
 @blueprint.route('/api/notes', methods=['GET'])
 def api_notes():
