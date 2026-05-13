@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="mb-4">
+    {% if note %}
+        Редактировать заметку
+    {% else %}
+        Создать заметку
+    {% endif %}
+</h1>
+
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">
+            Заголовок
+        </label>
+        <input type="text" name="title" class="form-control" value="{{ note.title if note else '' }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Содержимое
+        </label>
+
+        <textarea name="content" class="form-control" rows="10" placeholder="# Markdown поддерживается">
+            {{ note.content if note else '' }}
+        </textarea>
+    </div>
+
+    <button class="btn btn-primary">
+        Сохранить
+    </button>
+</form>
+
+{% if note %}
+<hr class="my-5">
+<h3>Прикреплённые файлы</h3>
+
+<form method="POST" action="/note/{{ note.id }}/attach" enctype="multipart/form-data" class="mb-4">
+    <input type="file" name="files" multiple accept="image/*" class="form-control mb-3">
+    <button class="btn btn-success">
+        Прикрепить
+    </button>
+</form>
+
+<div class="row">
+    {% for attachment in note.attachments %}
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <img src="/attachment/{{ attachment.id }}" class="card-img-top" alt="">
+                <div class="card-body">
+                    <form method="POST" action="/attachment/{{ attachment.id }}/delete">
+                        <button class="btn btn-danger btn-sm w-100">
+                            Удалить
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endif %}
+{% endblock %}

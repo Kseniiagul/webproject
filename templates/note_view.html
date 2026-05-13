@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+<h1 class="mb-4">{{ title }}</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        {{ rendered_html|safe }}
+    </div>
+</div>
+
+{% if attachments %}
+<div class="row">
+    {% for attachment in attachments %}
+        <div class="col-md-3 mb-4">
+            <a href="/attachment/{{ attachment.id }}" target="_blank">
+                <img src="/attachment/{{ attachment.id }}" class="img-fluid rounded">
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="mt-4 d-flex gap-2">
+    <a href="/note/{{ note.id }}/export/md" class="btn btn-secondary">
+        MD
+    </a>
+
+    <a href="/note/{{ note.id }}/export/html" class="btn btn-secondary">
+        HTML
+    </a>
+
+    <a href="/note/{{ note.id }}/export/txt" class="btn btn-secondary">
+        TXT
+    </a>
+</div>
+{% endblock %}
