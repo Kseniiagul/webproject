@@ -4,7 +4,7 @@ from database.attachments import Attachment
 from database.db_session import create_session
 from utils.md_parser import to_html
 
-blueprint = Blueprint('view_note', __name__, templates_folder='templates')
+blueprint = Blueprint('view_note', __name__, template_folder='templates')
 
 @blueprint.route('/note/<int:note_id>', methods=['GET'])
 def view_note(note_id):
