@@ -2,7 +2,7 @@ from datetime import datetime
 from forms.user import RegisterForm, LoginForm
 from database.users import User
 from database import db_session
-from flask import render_template, redirect
+from flask import render_template, redirect, url_for
 
 from flask_login import LoginManager, login_user, login_required, logout_user
 
@@ -25,7 +25,7 @@ def authorization_routes(app):
             user = db_sess.query(User).filter(User.username == form.username.data).first()
             if user and user.check_password(form.password.data):
                 login_user(user, remember=form.remember_me.data)
-                return redirect("/notes")
+                return redirect(url_for("notes.notes_list"))
             return render_template('login.html',
                                    message="Неправильный логин или пароль",
                                    form=form)
@@ -38,7 +38,7 @@ def authorization_routes(app):
         return redirect("/")
 
     @app.route('/register', methods=['GET', 'POST'])
-    def reqister():
+    def register():
         form = RegisterForm()
         if form.validate_on_submit():
             if form.password.data != form.password_again.data:
