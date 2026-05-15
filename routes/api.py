@@ -1,17 +1,17 @@
 import datetime
-from flask import Blueprint, abort, session, jsonify, request
+from flask import Blueprint, abort, jsonify, request
 from database.notes import Note
 from database.attachments import Attachment
 from database.db_session import create_session
+from flask_login import login_required, current_user
 
 api_bp = Blueprint('api_note', __name__, template_folder='templates')
 
 @api_bp.route('/api/notes', methods=['GET'])
+@login_required
 def api_notes():
-    if 'user_id' not in session:
-        abort(401)
     db_sess = create_session()
-    notes = db_sess.query(Note).filter(Note.user_id == session['user_id']).order_by(Note.updated_at.desc()).all()
+    notes = db_sess.query(Note).filter(Note.user_id == current_user.id).order_by(Note.updated_at.desc()).all()
 
     results = []
     for note in notes:
@@ -27,13 +27,12 @@ def api_notes():
     return jsonify(results)
 
 @api_bp.route('/api/note/<int:id>', methods=['GET'])
+@login_required
 def api_note(note_id):
-    if 'user_id' not in session:
-        abort(401)
     db_sess = create_session()
 
     note = db_sess.query(Note).get(note_id)
-    if not note or note.user_id != session['user_id']:
+    if not note or note.user_id != current_user.id:
         db_sess.close()
         abort(404)
 
@@ -63,10 +62,8 @@ def api_note(note_id):
     return jsonify(result)
 
 @api_bp.route('/api/note', methods=['POST'])
+@login_required
 def api_note_post():
-    if 'user_id' not in session:
-        abort(401)
-
     data = request.get_json()
     if not data or 'title' not in data:
         abort(400)
@@ -77,7 +74,7 @@ def api_note_post():
         content = data.get('content', ''),
         created_at = datetime.datetime.now(),
         updated_at = datetime.datetime.now(),
-        user_id = session['user_id']
+        user_id = current_user.id
     )
 
     db_sess.add(note)
@@ -88,14 +85,12 @@ def api_note_post():
     return jsonify({'id': note_id, 'message': 'created'}), 201
 
 @api_bp.route('/api/note/<int:id>', methods=['PUT'])
+@login_required
 def api_note_update(note_id):
-    if 'user_id' not in session:
-        abort(401)
-
     db_sess = create_session()
     note = db_sess.query(Note).get(note_id)
 
-    if not note or note.user_id != session['user_id']:
+    if not note or note.user_id != current_user.id:
         db_sess.close()
         abort(404)
 
@@ -116,14 +111,12 @@ def api_note_update(note_id):
     return jsonify({'id': note_id, 'message': 'updated'})
 
 @api_bp.route('/api/note/<int:id>', methods=['DELETE'])
+@login_required
 def api_note_delete(note_id):
-    if 'user_id' not in session:
-        abort(401)
-
     db_sess = create_session()
     note = db_sess.query(Note).get(note_id)
 
-    if not note or note.user_id != session['user_id']:
+    if not note or note.user_id != current_user.id:
         db_sess.close()
         abort(404)
 
